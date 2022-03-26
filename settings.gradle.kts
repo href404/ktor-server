@@ -1,0 +1,1 @@
+rootProject.name = "fr.pierrejulien.my-story-app"
