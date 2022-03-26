@@ -3,6 +3,7 @@ package fr.pierrejulien.service
 import fr.pierrejulien.db.DatabaseFactory.dbQuery
 import fr.pierrejulien.db.UserTable
 import fr.pierrejulien.models.User
+import fr.pierrejulien.security.hash
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
@@ -14,7 +15,7 @@ class UserServiceImpl : UserService {
         dbQuery {
             statement = UserTable.insert {
                 it[email] = params.email
-                it[password] = params.password // Todo: Encrypt password
+                it[password] = hash(params.password)
                 it[fullName] = params.fullName
                 it[avatar] = params.avatar
             }
