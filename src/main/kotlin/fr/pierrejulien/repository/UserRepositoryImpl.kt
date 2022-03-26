@@ -1,6 +1,7 @@
 package fr.pierrejulien.repository
 
 import fr.pierrejulien.models.User
+import fr.pierrejulien.security.JwtConfig
 import fr.pierrejulien.service.CreateUserParams
 import fr.pierrejulien.service.UserService
 import fr.pierrejulien.utils.BaseResponse
@@ -13,8 +14,7 @@ class UserRepositoryImpl(
             return BaseResponse.ErrorResponse(message = "Email already registered")
 
         val user = userService.registerUser(params) ?: return BaseResponse.ErrorResponse()
-
-        // Todo; Generate authentification token for the user
+        user.authToken = JwtConfig.instance.createAccessToken(user.id)
         return BaseResponse.SuccessResponse(user)
     }
 
